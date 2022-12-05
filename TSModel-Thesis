@@ -1,0 +1,13 @@
+year <- c(2014,2015,2016,2017,2018,2020)
+hogares <- c(31374724, 31849822,32925270,34067895,34400515,35749659)
+devices <- hogares*.45
+df_hogares <- data.frame(year,devices)
+df_devices <- data.frame (tenyears = c(df_hogares[2] * 79.2), moreyears=c(df_hogares[2] * 20.8) )
+colnames(df_devices) <- c('effic_policy','noneffic_policy')
+df_devices$effic_nopolicy = df_devices$effic_policy *.984
+df_devices$noeffic_nopolicy = df_devices$noneffic_policy * 1.016
+df_devices$consumptionTWh_nopolicy = ((df_devices$effic_nopolicy * 2.5) + (df_devices$noeffic_nopolicy * 3))/1000000000000*8760
+df_devices$consumptionTWh_policy = ((df_devices$effic_policy * 2) + (df_devices$noneffic_policy * 3))/1000000000000*8760
+df_devices$consumptionTWh_policyBEST = ((df_devices$effic_policy * 1) + (df_devices$noneffic_policy * 3))/1000000000000*8760
+df_devices$savingsTWh_policyNORMAL = df_devices$consumptionTWh_nopolicy  - df_devices$consumptionTWh_policy
+df_devices$savingsTWh_policyBEST = df_devices$consumptionTWh_nopolicy  - df_devices$consumptionTWh_policyBEST
